@@ -111,10 +111,11 @@ public class memberSystem {
 									break;
 								else
 									System.out.println("잘못입력하셨습니다.");
-//								if(dao.exp(vo) < 100) {
-//									dao.lvup(exp);
-//								}
-								System.out.println(dao.exp(vo));
+								if(Integer.parseInt(dao.exp(exp)) >= 100) {
+									dao.lvup(exp);
+									dao.checkStatus(vo);
+									dao.exp0(exp);
+								}
 							}
 						} else if (choose == 3) {
 							System.out.println("■■■정보확인■■");

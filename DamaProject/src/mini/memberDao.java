@@ -113,7 +113,6 @@ public class memberDao {
 	public void nickPrint (memberVO vo) { 
 	      getConn();
 	      String sql = "select nick from dama where id = ?";
-	      String nick = null;
 	      try {
 	         psmt = conn.prepareStatement(sql);
 	         psmt.setString(1, vo.getId());
@@ -137,7 +136,7 @@ public class memberDao {
 		try {
 			getConn();
 
-			String sql = "update dama1 set exp = exp + 30 where id = ?";
+			String sql = "update dama1 set exp = exp + 20 where id = ?";
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, vo.getId());
 
@@ -154,7 +153,7 @@ public class memberDao {
 		try {
 			getConn();
 
-			String sql = "update dama1 set exp = exp - 30 where id = ?";
+			String sql = "update dama1 set exp = exp - 20 where id = ?";
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, vo.getId());
 
@@ -166,7 +165,7 @@ public class memberDao {
 		}
 	}
 	
-	public int exp(memberVO vo) {
+	public String exp(memberVO vo) {
 		int a = 0;
 		try {
 			getConn();
@@ -175,37 +174,17 @@ public class memberDao {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, vo.getId());
 			rs = psmt.executeQuery();
-			
 			if (rs.next()) {
-				String pw = rs.getString("id");
-				int exp = rs.getInt("exp");
+				return rs.getString("exp");
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close();
 		}
-		return 0;
+		return null;
 	}
-	/*
-	 * ArrayList<memberVO> list = new ArrayList<memberVO>();
-		getConn();
-		String sql = "select id, nick, lv, exp from dama1 order by lv desc, exp desc";
-
-		try {
-			psmt = conn.prepareStatement(sql);
-			rs = psmt.executeQuery();
-
-			while (rs.next()) {
-				String id = rs.getString("id");
-				String nick = rs.getString("nick");
-				String lv = rs.getString("lv");
-				int exp = rs.getInt("exp");
-
-				memberVO vo = new memberVO(id, nick, lv, exp);
-				list.add(vo);
-			}
-	 * */
 	public void lvup(memberVO vo) {
 		int cnt = 0;
 
@@ -213,6 +192,23 @@ public class memberDao {
 			getConn();
 
 			String sql = "update dama1 set lv = lv + 1 where id = ?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, vo.getId());
+
+			cnt = psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+	}
+	public void exp0(memberVO vo) {
+		int cnt = 0;
+
+		try {
+			getConn();
+
+			String sql = "update dama1 set exp = 0 where id = ?";
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, vo.getId());
 
