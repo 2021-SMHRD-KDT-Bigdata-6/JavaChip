@@ -8,17 +8,17 @@ public class memberSystem {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.println("´Ù¸¶°íÄ¡ Å°¿ì±â");
+		System.out.println("ë‹¤ë§ˆê³ ì¹˜ í‚¤ìš°ê¸°");
 		memberDao dao = new memberDao();
-
+		img1 img = new img1();
 		while (true) {
-			System.out.print("1.È¸¿ø°¡ÀÔ 2.·Î±×ÀÎ 3.Á¾·á >> ");
+			System.out.print("1.íšŒì›ê°€ì… 2.ë¡œê·¸ì¸ 3.ì¢…ë£Œ >> ");
 			int main = sc.nextInt();
 			if (main == 1) {
-				System.out.println("--È¸¿ø°¡ÀÔ--");
-				System.out.print("IDÀÔ·Â : ");
+				System.out.println("--íšŒì›ê°€ì…--");
+				System.out.print("IDì…ë ¥ : ");
 				String id = sc.next();
-				System.out.print("PWÀÔ·Â : ");
+				System.out.print("PWì…ë ¥ : ");
 				String pw = sc.next();
 
 				memberVO vo = new memberVO(id, pw);
@@ -26,104 +26,121 @@ public class memberSystem {
 				int cnt = dao.join(vo);
 
 				if (cnt > 0)
-					System.out.println("È¸¿ø°¡ÀÔ ¼º°ø!");
+					System.out.println("íšŒì›ê°€ì… ì„±ê³µ!");
 				else
-					System.out.println("È¸¿ø°¡ÀÔ ½ÇÆĞ...");
-			} 
-			else if (main == 2) {
-				System.out.println("--·Î±×ÀÎ--");
-				System.out.print("IDÀÔ·Â : ");
+					System.out.println("íšŒì›ê°€ì… ì‹¤íŒ¨...");
+			} else if (main == 2) {
+				System.out.println("--ë¡œê·¸ì¸--");
+				System.out.print("IDì…ë ¥ : ");
 				String id = sc.next();
-				System.out.print("PWÀÔ·Â : ");
+				System.out.print("PWì…ë ¥ : ");
 				String pw = sc.next();
-				
+
 				memberVO vo = new memberVO(id, pw);
 				memberVO info = dao.login(vo);
-				
-				if(info != null) {
-					System.out.println("·Î±×ÀÎ ¼º°ø!");
-					System.out.println(info.getId() + "´Ô È¯¿µÇÕ´Ï´Ù!");
-					
+
+				if (info != null) {
+					System.out.println("ë¡œê·¸ì¸ ì„±ê³µ!");
+					System.out.println(info.getId() + "ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤!");
+
 					while (true) {
-						System.out.print("1.´Ù¸¶°íÄ¡ µî·Ï 2.´Ù¸¶°íÄ¡ Å°¿ì±â 3.´Ù¸¶°íÄ¡ Á¤º¸È®ÀÎ 4.·©Å· È®ÀÎ 5.Á¾·á >> ");
+						System.out.print("1.ë‹¤ë§ˆê³ ì¹˜ ë“±ë¡ 2.ë‹¤ë§ˆê³ ì¹˜ í‚¤ìš°ê¸° 3.ë‹¤ë§ˆê³ ì¹˜ ì •ë³´í™•ì¸ 4.ë­í‚¹ í™•ì¸ 5.ì¢…ë£Œ >> ");
 						int choose = sc.nextInt();
 						if (choose == 1) {
-							System.out.println("--´Ù¸¶°íÄ¡ µî·Ï--");
-							System.out.print("NICKÀÔ·Â : ");
+							System.out.println("â– â– ë‹¤ë§ˆê³ ì¹˜ ë“±ë¡â– â– ");
+							System.out.print("NICKì…ë ¥ : ");
 							String nick = sc.next();
-						
+
 							memberVO vo1 = new memberVO(nick, id, pw);
 
 							int cnt = dao.make(vo1);
 
-							if (cnt > 0)
-								System.out.println(nick + "»ı¼º!");
-							else
-								System.out.println("»ı¼º ½ÇÆĞ...");
-						}
-						else if (choose == 2) {
-							while(true) {
-								// ·£´ı Ãâ·Â
-								System.out.print("1.¹ä¸Ô±â 2.ÀáÀÚ±â 3.ÈŞ½ÄÇÏ±â 4.°øºÎÇÏ±â 5.Á¾·á >> ");
+							if (cnt > 0) {
+								System.out.println(nick + "ìƒì„±!");
+								img.birth();
+							} else
+								System.out.println("ìƒì„± ì‹¤íŒ¨...");
+						} else if (choose == 2) {
+							while (true) {
+								// ëœë¤ ì¶œë ¥
+								String[] desire = {"ë°°ê³ íŒŒ", "ì¡¸ë ¤","í”¼ê³¤í•´","ê³µë¶€í•´ì•¼ì§€"}; 
+							    int count=0;
+							    while (true) {
+							       count = (int)(Math.random()*4); // 1-5ê°œ? 
+							       System.out.println(desire[count]);
+							       break;
+							    }
+								memberVO exp = new memberVO(id);
+
+								System.out.print("1.ë°¥ë¨¹ê¸° 2.ì ìê¸° 3.íœ´ì‹í•˜ê¸° 4.ê³µë¶€í•˜ê¸° 5.ì¢…ë£Œ >> ");
 								String num = sc.next();
-								
-								if(num.equals("1")) {
-									//¹ä¸Ô´Â ÀÌ¹ÌÁö
-									
-									
-								}
-								else if(num.equals("2")) {
-									//ÀáÀÚ´Â ÀÌ¹ÌÁö
-									
-								}
-								else if(num.equals("3")) {
-									//ÈŞ½Ä ÀÌ¹ÌÁö
-									
-								}
-								else if(num.equals("4")) {
-									//°øºÎ ÀÌ¹ÌÁö
-									
-								}
-								else if(num.equals("5")) 
+
+								if (num.equals("1")) {
+									// ë°¥ë¨¹ëŠ” ì´ë¯¸ì§€
+									img.food();
+									if (count == 0)
+										dao.expplus(exp);
+									else
+										dao.expminus(exp);
+
+								} else if (num.equals("2")) {
+									// ì ìëŠ” ì´ë¯¸ì§€
+									img.sleep();
+									if (count == 1)
+										dao.expplus(exp);
+									else
+										dao.expminus(exp);
+
+								} else if (num.equals("3")) {
+									// íœ´ì‹ ì´ë¯¸ì§€
+									img.rest();
+									if (count == 2)
+										dao.expplus(exp);
+									else
+										dao.expminus(exp);
+
+								} else if (num.equals("4")) {
+									// ê³µë¶€ ì´ë¯¸ì§€
+									img.study();
+									if (count == 3)
+										dao.expplus(exp);
+									else
+										dao.expminus(exp);
+
+								} else if (num.equals("5"))
 									break;
 								else
-									System.out.println("Àß¸øÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.");
+									System.out.println("ì˜ëª»ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.");
+//								if(dao.exp(vo) < 100) {
+//									dao.lvup(exp);
+//								}
+								System.out.println(dao.exp(vo));
 							}
-						}
-						else if (choose == 3) {
-							
-						}
-						else if (choose == 4) {
-							// ·©Å·
-							System.out.println("--·©Å·--");
-							ArrayList<memberVO> list = dao.selectAll();
+						} else if (choose == 3) {
+							System.out.println("â– â– â– ì •ë³´í™•ì¸â– â– ");
+							dao.checkStatus(vo);
+						} else if (choose == 4) {
+							// ë­í‚¹
+							System.out.println("--ë­í‚¹--");
+							ArrayList<memberVO> list = dao.Rank();
 							for (int i = 0; i < list.size(); i++) {
-								System.out.println(list.get(i));
+								System.out.println((i + 1) + "ë“± " + list.get(i));
 							}
-						}
-						else if (choose == 5) {
-							System.out.println("Á¾·á");
+						} else if (choose == 5) {
+							System.out.println("ì¢…ë£Œ");
 							break;
-							//Á¾·á
-						}
-						else
-							System.out.println("Àß¸øÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.");
+							// ì¢…ë£Œ
+						} else
+							System.out.println("ì˜ëª»ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.");
 					}
-				}
-				
-				else
-					System.out.println("·Î±×ÀÎ ½ÇÆĞ...");
-				
-			}
-			else if (main == 3) {
-				System.out.println("Á¾·áÇÕ´Ï´Ù.");
+				} else
+					System.out.println("ë¡œê·¸ì¸ ì‹¤íŒ¨...");
+
+			} else if (main == 3) {
+				System.out.println("ì¢…ë£Œí•©ë‹ˆë‹¤.");
 				break;
-			}
-			else
-				System.out.println("Àß¸øÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.");
-
-
-
+			} else
+				System.out.println("ì˜ëª»ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.");
 		}
 
 	}

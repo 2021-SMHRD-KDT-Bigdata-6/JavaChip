@@ -34,6 +34,16 @@ public class memberVO {
 		this.id = id;
 		this.pw = pw;
 	}
+	public memberVO(String id, int exp) {
+		this.id = id;
+		this.exp = exp;
+	}
+	public memberVO(String id) {
+		this.id = id;
+	}
+	public memberVO(int exp) {
+		this.exp = exp;
+	}
 	public memberVO(String nick, String id, String pw) {
 		this.nick = nick;
 		this.id = id;
