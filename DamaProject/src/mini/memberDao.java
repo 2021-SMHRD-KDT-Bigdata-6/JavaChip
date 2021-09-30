@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class memberDao {
 
@@ -21,6 +22,7 @@ public class memberDao {
 			String db_id = "cgi_5_4";
 			String db_pw = "smhrd4";
 			conn = DriverManager.getConnection(db_url, db_id, db_pw);
+					
 		}
 		catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -43,16 +45,14 @@ public class memberDao {
 		}
 	}
 
-	public int join(memberVO vo) {
+	public int join(memberVO vo) { // 회원가입
 		int cnt = 0;
 		try {
 			getConn();
 			String sql = "insert into member values(?, ?)";
-
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, vo.getId());
 			psmt.setString(2, vo.getPw());
-
 			cnt = psmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -63,88 +63,79 @@ public class memberDao {
 		return cnt;
 	}
 	
-	// 다마고치 캐릭터 생성
-	public int make(memberVO vo) {
-		int cnt = 0;
-		try {
-			getConn();
-			String sql = "insert into dama values(?, 1, 0, ?)";
-
-			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, vo.getNick());
-			psmt.setString(2, vo.getId());
-			
-
-			cnt = psmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			close();
-		}
-		return cnt;
-	}
-	
-	public memberVO login(memberVO vo) {
+	public memberVO login(memberVO vo) { // 로그인 
 		memberVO info = null;
-
 		try {
 			getConn();
-
 			String sql = "select * from member where id = ? and pw = ?";
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, vo.getId());
 			psmt.setString(2, vo.getPw());
 			rs = psmt.executeQuery();
 			if (rs.next()) {
-
 				String id = rs.getString("id");
 				String pw = rs.getString("pw");
-
 				info = new memberVO(id, pw);
 			}
 		}
-
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
 		finally {
 			close();
 		}
-
 		return info;
 	}
 	
-	
-
-	public int update(memberVO vo) {
+	public int make(memberVO vo) {  // 다마고치 별명 등록 
 		int cnt = 0;
-
 		try {
 			getConn();
-
-			String sql = "update member set pw = ?, nick = ?, phone = ?  where id = ?";
+			String sql = "insert into dama values(?, 1, 0, ?)";
 			psmt = conn.prepareStatement(sql);
-
-			psmt.setString(1, vo.getPw());
-			psmt.setString(2, vo.getNick());
-			psmt.setString(3, vo.getPhone());
-			psmt.setString(4, vo.getId());
-
+			psmt.setString(1, vo.getNick());
+			psmt.setString(2, vo.getId());
 			cnt = psmt.executeUpdate();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		finally {
 			close();
 		}
 		return cnt;
 	}
 
-	public void exp(memberVO vo) {
+	public void randomDesire () { // 랜덤욕구 출력
+		String[] desire = {"배고파", "졸려","피곤해","공부해야지","아파"}; 
+		int count=0;
+		while (true) {
+			count = (int)(Math.random()*5); // 1-5개? 
+			System.out.println(desire[count]);
+			break;
+		}
+	}
+	
+	public void nickPrint (memberVO vo) { // 별명 출력 
+		getConn();
+		String sql = "select nick from dama where id = ?";
+		String nick = null;
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, vo.getId());
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				System.out.println(rs.getString("nick"));
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			close();
+		}
+	}
+	
+	public void exp(memberVO vo) {   // 경험치 카운트 *** 
 		int cnt = 0;
 
 		try {
@@ -166,7 +157,8 @@ public class memberDao {
 			close();
 		}
 	}
-	public ArrayList<memberVO> selectAll() {
+	
+	public ArrayList<memberVO> selectAll() {  // 랭킹 출력 
 		ArrayList<memberVO> list = new ArrayList<memberVO>();
 		getConn();
 		String sql = "select id, nick, lv, exp from dama order by lv desc, exp desc";
@@ -192,23 +184,30 @@ public class memberDao {
 
 		return list;
 	}
-
-	public int delete(memberVO vo) {
-		int cnt = 0;
+	
+	public void checkStatus (memberVO vo)  {  // 상태 출력 
+		getConn();
+		String sql = "select id,nick,lv,exp from dama where id = ?";
 		try {
-			getConn();
-
-			String sql = "delete from big_member where id = ? and pw = ?";
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, vo.getId());
-			psmt.setString(2, vo.getPw());
-			cnt = psmt.executeUpdate();
-		} catch (SQLException e) {
-			// exception을 추적하면서 문제가 발생하는지 출력 어디서
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				System.out.print("id : " + rs.getString("id")+ "\t");
+				System.out.print("별명 : " + rs.getString("nick")+ "\t");
+				System.out.print("레벨 : " + rs.getString("lv")+ "\t");
+				System.out.println("경험치 : " + rs.getString("exp"));
+			}
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
+		}
+		finally {
 			close();
 		}
-		return cnt;
 	}
+	
 }
+	
+
+	
