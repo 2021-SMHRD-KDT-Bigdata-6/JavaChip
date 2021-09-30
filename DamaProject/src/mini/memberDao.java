@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class memberDao {
 
@@ -67,18 +68,16 @@ public class memberDao {
 		}
 		return info;
 	}
-	
+
 	// 회원가입 성공 여부
-	public int join(memberVO vo) {
+	public int join(memberVO vo) { // 회원가입
 		int cnt = 0;
 		try {
 			getConn();
 			String sql = "insert into member values(?, ?)";
-
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, vo.getId());
 			psmt.setString(2, vo.getPw());
-
 			cnt = psmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -87,8 +86,7 @@ public class memberDao {
 		}
 		return cnt;
 	}
-	
-	
+
 	// 다마고치 캐릭터 생성
 	public int make(memberVO vo) {
 		int cnt = 0;
@@ -108,26 +106,24 @@ public class memberDao {
 		}
 		return cnt;
 	}
-	
-	// 별명 
-	public void nickPrint (memberVO vo) { 
-	      getConn();
-	      String sql = "select nick from dama where id = ?";
-	      try {
-	         psmt = conn.prepareStatement(sql);
-	         psmt.setString(1, vo.getId());
-	         rs = psmt.executeQuery();
-	         if (rs.next()) {
-	            System.out.println(rs.getString("nick"));
-	         }
-	      }
-	      catch (SQLException e) {
-	         e.printStackTrace();
-	      }
-	      finally {
-	         close();
-	      }
-	   }
+
+	// 별명
+	public void nickPrint(memberVO vo) {
+		getConn();
+		String sql = "select nick from dama where id = ?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, vo.getId());
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				System.out.println(rs.getString("nick"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+	}
 
 	// 경험치
 	public void expplus(memberVO vo) {
@@ -147,24 +143,22 @@ public class memberDao {
 			close();
 		}
 	}
+
 	public void expminus(memberVO vo) {
 		int cnt = 0;
-
 		try {
 			getConn();
-
 			String sql = "update dama1 set exp = exp - 20 where id = ?";
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, vo.getId());
-
-			cnt = psmt.executeUpdate();
+			psmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close();
 		}
+
 	}
-	
+
 	public String exp(memberVO vo) {
 		int a = 0;
 		try {
@@ -177,7 +171,7 @@ public class memberDao {
 			if (rs.next()) {
 				return rs.getString("exp");
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -185,23 +179,34 @@ public class memberDao {
 		}
 		return null;
 	}
-	public void lvup(memberVO vo) {
-		int cnt = 0;
 
-		try {
-			getConn();
+	 public void lvup(memberVO vo) {
+		 getConn();
+		 String sql = "update dama1 set lv = lv + 1 where id = ?";
+		 // 다시 생성
+		 
+		 
+		 
+		 
+	 }
 
-			String sql = "update dama1 set lv = lv + 1 where id = ?";
-			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, vo.getId());
+//	public int make(memberVO vo) {  // 다마고치 별명 등록 
+//		int cnt = 0;
+//		try {
+//			getConn();
+//			String sql = "insert into dama values(?, 1, 0, ?)";
+//			psmt = conn.prepareStatement(sql);
+//			psmt.setString(1, vo.getNick());
+//			psmt.setString(2, vo.getId());
+//			cnt = psmt.executeUpdate();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		finally {
+//			close();
+//		}
+//	}
 
-			cnt = psmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close();
-		}
-	}
 	public void exp0(memberVO vo) {
 		int cnt = 0;
 
@@ -214,14 +219,26 @@ public class memberDao {
 
 			cnt = psmt.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 		} finally {
 			close();
 		}
 	}
 
+	public void randomDesire() { // 랜덤욕구 출력
+		String[] desire = { "배고파", "졸려", "피곤해", "공부해야지", "아파" };
+		int count = 0;
+		while (true) {
+			count = (int) (Math.random() * 5); // 1-5개?
+			System.out.println(desire[count]);
+			break;
+		}
+	}
+
 	// 랭킹
-	public ArrayList<memberVO> Rank() {
+	// public ArrayList<memberVO> Rank() {
+
+	public ArrayList<memberVO> Rank() { // 랭킹 출력
 		ArrayList<memberVO> list = new ArrayList<memberVO>();
 		getConn();
 		String sql = "select id, nick, lv, exp from dama1 order by lv desc, exp desc";
@@ -276,7 +293,7 @@ public class memberDao {
 
 	public void checkStatus(memberVO vo) { // 상태 출력
 		getConn();
-		String sql = "select id,nick,lv,exp from dama1 where id = ?";
+		String sql = "select id,nick,lv,exp from dama where id = ?";
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, vo.getId());
