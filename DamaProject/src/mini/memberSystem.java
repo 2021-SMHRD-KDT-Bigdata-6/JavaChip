@@ -8,6 +8,7 @@ public class memberSystem {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 
+		System.out.println("브랜치 지움!");
 		System.out.println("다마고치 키우기");
 		memberDao dao = new memberDao();
 
