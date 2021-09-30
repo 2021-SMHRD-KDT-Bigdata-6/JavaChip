@@ -140,7 +140,7 @@ public class memberDao {
 	      int cnt = 0;
 	      try {
 	         getConn();
-	         String sql = "update dama1 set exp = exp + 20 where id = ?";
+	         String sql = "update dama set exp = exp + 20 where id = ?";
 	         psmt = conn.prepareStatement(sql);
 	         psmt.setString(1, vo.getId());
 	         cnt = psmt.executeUpdate();
@@ -156,7 +156,7 @@ public class memberDao {
       int cnt = 0;
       try {
          getConn();
-         String sql = "update dama1 set exp = exp - 20 where id = ?";
+         String sql = "update dama set exp = exp - 20 where id = ?";
          psmt = conn.prepareStatement(sql);
          psmt.setString(1, vo.getId());
          cnt = psmt.executeUpdate();
@@ -172,7 +172,7 @@ public class memberDao {
 	      try {
 	         getConn();
 
-	         String sql = "select exp from dama1 where id = ?";
+	         String sql = "select exp from dama where id = ?";
 	         psmt = conn.prepareStatement(sql);
 	         psmt.setString(1, vo.getId());
 	         rs = psmt.executeQuery();
@@ -193,7 +193,7 @@ public class memberDao {
 	      try {
 	         getConn();
 
-	         String sql = "update dama1 set exp = 0 where id = ?";
+	         String sql = "update dama set exp = 0 where id = ?";
 	         psmt = conn.prepareStatement(sql);
 	         psmt.setString(1, vo.getId());
 
@@ -208,7 +208,7 @@ public class memberDao {
 	      int cnt = 0;
 	      try {
 	         getConn();
-	         String sql = "update dama1 set lv = lv + 1 where id = ?";
+	         String sql = "update dama set lv = lv + 1 where id = ?";
 	         psmt = conn.prepareStatement(sql);
 	         psmt.setString(1, vo.getId());
 	         cnt = psmt.executeUpdate();
