@@ -135,24 +135,19 @@ public class memberDao {
 		}
 	}
 	
-	public void exp(memberVO vo) {   // 경험치 카운트 *** 
+	public void exp(memberVO vo) {   // 경험치=욕구 (+30) 
 		int cnt = 0;
 
 		try {
 			getConn();
-
 			String sql = "update member set exp + 30";
 			psmt = conn.prepareStatement(sql);
-
 			psmt.setInt(1, vo.getExp());
-
 			cnt = psmt.executeUpdate();
 		}
-
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		finally {
 			close();
 		}
@@ -194,9 +189,9 @@ public class memberDao {
 			rs = psmt.executeQuery();
 			if (rs.next()) {
 				System.out.print("id : " + rs.getString("id")+ "\t");
-				System.out.print("별명 : " + rs.getString("nick")+ "\t");
-				System.out.print("레벨 : " + rs.getString("lv")+ "\t");
-				System.out.println("경험치 : " + rs.getString("exp"));
+				System.out.print(" 별명 : " + rs.getString("nick")+ "\t");
+				System.out.print(" 레벨 : " + rs.getString("lv")+ "\t");
+				System.out.println(" 경험치 : " + rs.getString("exp"));
 			}
 		}
 		catch (SQLException e) {

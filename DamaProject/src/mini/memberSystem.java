@@ -7,6 +7,7 @@ public class memberSystem {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
+		int choice = 0; // 키우기 상태선택 
 		
 		System.out.println("다마고치 키우기");
 		memberDao dao = new memberDao();
@@ -49,7 +50,7 @@ public class memberSystem {
 						System.out.print("1.다마고치 등록 2.다마고치 키우기 3.다마고치 정보확인 4.랭킹 확인 5.종료 >> ");
 						int choose = sc.nextInt();
 						if (choose == 1) {
-							System.out.println("--다마고치 등록--");
+							System.out.println("===다마고치 등록===");
 							System.out.print("NICK입력 : ");
 							String nick = sc.next();
 						
@@ -69,30 +70,35 @@ public class memberSystem {
 								dao.nickPrint(vo);
 								System.out.print("의 상태 >> ");
 								dao.randomDesire();
-								System.out.print("1.밥먹기 2.잠자기 3.휴식하기 4.공부하기 5.종료 >> ");
-								String num = sc.next();
+								System.out.print("1.밥먹기 2.잠자기 3.휴식하기 4.공부하기 5.병원가기 6.이전으로 >> ");
+							 	String num = sc.next(); // --> num.equals("1") 코드 
+								// int c = sc.nextInt();
 								
 								if(num.equals("1")) {  // 밥먹기
-									//밥먹는 이미지
 									Image.food();
+							//		if(dao.randomDesire()==dao.exp())
 								}
-								else if(num.equals("2")) {
-									//잠자는 이미지
+								else if(num.equals("2")) { // 잠자기
+									Image.sleep();
 								}
-								else if(num.equals("3")) {
-									//휴식 이미지
+								else if(num.equals("3")) { // 휴식하기
+									Image.rest();
 								}
-								else if(num.equals("4")) {
-									//공부 이미지
+								else if(num.equals("4")) {  // 공부하기
+									Image.study();
+									
+								}else if(num.equals("5")) { // 병원가기 
+									Image.hospital();
+									
 								}
-								else if(num.equals("5")) 
+								else if(num.equals("6")) 
 									break;
 								else
 									System.out.println("잘못입력하셨습니다.");
 							}
 						}
 						else if (choose == 3) { // 다마고치 정보확인 
-							System.out.println("==정보확인==");
+							System.out.println("===정보확인===");
 							Image.nowStatus();
 							dao.checkStatus(vo);
 							
@@ -100,7 +106,7 @@ public class memberSystem {
 						}
 						else if (choose == 4) {  // 다마고치 랭킹확인 
 							// 랭킹
-							System.out.println("--랭킹--");
+							System.out.println("===랭킹===");
 							ArrayList<memberVO> list = dao.selectAll();
 							for (int i = 0; i < list.size(); i++) {
 								System.out.println(list.get(i));
