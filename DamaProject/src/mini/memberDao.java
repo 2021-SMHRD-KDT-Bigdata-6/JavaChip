@@ -49,7 +49,11 @@ public class memberDao {
 	      int cnt = 0;
 	      try {
 	         getConn();
+<<<<<<< HEAD
 	         String sql = "insert into member values(?, ?)";
+=======
+	         String sql = "update dama set exp = exp + 20 where id = ?";
+>>>>>>> branch 'master' of https://github.com/2021-SMHRD-KDT-Bigdata-6/JavaChip.git
 	         psmt = conn.prepareStatement(sql);
 	         psmt.setString(1, vo.getId());
 	         psmt.setString(2, vo.getPw());
@@ -62,9 +66,31 @@ public class memberDao {
 	      }
 	      return cnt;
 	   }
+<<<<<<< HEAD
 	   
 	   public memberVO login(memberVO vo) { // 로그인 
 	      memberVO info = null;
+=======
+	
+   public void expminus(memberVO vo) { // 욕구 = 경험치 -20 
+
+      int cnt = 0;
+      try {
+         getConn();
+         String sql = "update dama set exp = exp - 20 where id = ?";
+         psmt = conn.prepareStatement(sql);
+         psmt.setString(1, vo.getId());
+         cnt = psmt.executeUpdate();
+      } catch (SQLException e) {
+         e.printStackTrace();
+      } finally {
+         close();
+      }
+   }
+   
+   public String exp(memberVO vo) {  // 경험치 
+	      int a = 0;
+>>>>>>> branch 'master' of https://github.com/2021-SMHRD-KDT-Bigdata-6/JavaChip.git
 	      try {
 	         getConn();
 	         String sql = "select * from member where id = ? and pw = ?";
@@ -106,6 +132,7 @@ public class memberDao {
 	      return cnt;
 	   }
 
+<<<<<<< HEAD
 	   public void randomDesire () { // 랜덤욕구 출력
 	      String[] desire = {"배고파", "졸려","피곤해","공부해야지","아파"}; 
 	      int count=0;
@@ -121,6 +148,9 @@ public class memberDao {
 	      String sql = "select nick from dama where id = ?";
 	      String nick = null;
 	      try {
+=======
+	         String sql = "select exp from dama where id = ?";
+>>>>>>> branch 'master' of https://github.com/2021-SMHRD-KDT-Bigdata-6/JavaChip.git
 	         psmt = conn.prepareStatement(sql);
 	         psmt.setString(1, vo.getId());
 	         rs = psmt.executeQuery();
@@ -191,6 +221,7 @@ public class memberDao {
 	         close();
 	      }
 
+<<<<<<< HEAD
 	      return list;
 	   }
 	   
@@ -198,6 +229,9 @@ public class memberDao {
 	      getConn();
 	      String sql = "select id,nick,lv,exp from dama where id = ?";
 	      try {
+=======
+	         String sql = "update dama set exp = 0 where id = ?";
+>>>>>>> branch 'master' of https://github.com/2021-SMHRD-KDT-Bigdata-6/JavaChip.git
 	         psmt = conn.prepareStatement(sql);
 	         psmt.setString(1, vo.getId());
 	         rs = psmt.executeQuery();
@@ -208,7 +242,21 @@ public class memberDao {
 	            System.out.println(" 경험치 : " + rs.getString("exp"));
 	         }
 	      }
+<<<<<<< HEAD
 	      catch (SQLException e) {
+=======
+	   }
+
+   public void lvup(memberVO vo) {  // 레벨업 ! 
+	      int cnt = 0;
+	      try {
+	         getConn();
+	         String sql = "update dama set lv = lv + 1 where id = ?";
+	         psmt = conn.prepareStatement(sql);
+	         psmt.setString(1, vo.getId());
+	         cnt = psmt.executeUpdate();
+	      } catch (SQLException e) {
+>>>>>>> branch 'master' of https://github.com/2021-SMHRD-KDT-Bigdata-6/JavaChip.git
 	         e.printStackTrace();
 	      }
 	      finally {
