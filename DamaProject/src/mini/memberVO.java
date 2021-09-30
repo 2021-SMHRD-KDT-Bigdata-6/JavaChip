@@ -24,6 +24,10 @@ public class memberVO {
 		this.exp = exp;
 	}
 	
+	public memberVO(String id) {
+		
+	}
+
 	public memberVO(String id, String nick, String lv, int exp) {
 		this.id = id;
 		this.nick = nick;
@@ -41,8 +45,9 @@ public class memberVO {
 	}
 	
 	// 기본 생성자
-	public memberVO() {
-	}
+	
+
+	
 
 	public String getId() {
 		return id;

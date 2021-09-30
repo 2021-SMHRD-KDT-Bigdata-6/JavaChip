@@ -14,7 +14,7 @@ public class memberDao {
 	private PreparedStatement psmt;
 	private ResultSet rs;
 
-	private void getConn() {
+	private void getConn() { // 연결 
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 
@@ -32,7 +32,7 @@ public class memberDao {
 
 	}
 
-	private void close() {
+	private void close() {  // 닫기 
 		try {
 			if (rs != null)
 				rs.close();
@@ -87,7 +87,7 @@ public class memberDao {
 		return info;
 	}
 	
-	public int make(memberVO vo) {  // 다마고치 별명 등록 
+	public int make(memberVO vo) {  // 다마고치 별명 등록 (캐릭터 생성) 
 		int cnt = 0;
 		try {
 			getConn();
@@ -97,6 +97,7 @@ public class memberDao {
 			psmt.setString(2, vo.getId());
 			cnt = psmt.executeUpdate();
 		} catch (SQLException e) {
+			System.out.println("이미 생성하셨습니다.");
 			e.printStackTrace();
 		}
 		finally {
@@ -115,7 +116,7 @@ public class memberDao {
 		}
 	}
 	
-	public void nickPrint (memberVO vo) { // 별명 출력 
+	public String nickPrint (memberVO vo) { // 별명 출력 
 		getConn();
 		String sql = "select nick from dama where id = ?";
 		String nick = null;
@@ -124,7 +125,7 @@ public class memberDao {
 			psmt.setString(1, vo.getId());
 			rs = psmt.executeQuery();
 			if (rs.next()) {
-				System.out.println(rs.getString("nick"));
+				nick = rs.getString("nick");
 			}
 		}
 		catch (SQLException e) {
@@ -133,27 +134,94 @@ public class memberDao {
 		finally {
 			close();
 		}
+		return nick;
 	}
 	
-	public void exp(memberVO vo) {   // 경험치=욕구 (+30) 
-		int cnt = 0;
+	public void expplus(memberVO vo) {  // 욕구 = 경험치 +20 
+	      int cnt = 0;
+	      try {
+	         getConn();
+	         String sql = "update dama1 set exp = exp + 20 where id = ?";
+	         psmt = conn.prepareStatement(sql);
+	         psmt.setString(1, vo.getId());
+	         cnt = psmt.executeUpdate();
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close();
+	      }
+	   }
+	
+   public void expminus(memberVO vo) { // 욕구 = 경험치 -20 
 
-		try {
-			getConn();
-			String sql = "update member set exp + 30";
-			psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, vo.getExp());
-			cnt = psmt.executeUpdate();
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			close();
-		}
-	}
+      int cnt = 0;
+      try {
+         getConn();
+         String sql = "update dama1 set exp = exp - 20 where id = ?";
+         psmt = conn.prepareStatement(sql);
+         psmt.setString(1, vo.getId());
+         cnt = psmt.executeUpdate();
+      } catch (SQLException e) {
+         e.printStackTrace();
+      } finally {
+         close();
+      }
+   }
+   
+   public String exp(memberVO vo) {  // 경험치 
+	      int a = 0;
+	      try {
+	         getConn();
+
+	         String sql = "select exp from dama1 where id = ?";
+	         psmt = conn.prepareStatement(sql);
+	         psmt.setString(1, vo.getId());
+	         rs = psmt.executeQuery();
+	         if (rs.next()) {
+	            return rs.getString("exp");
+	         }
+
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close();
+	      }
+	      return null;
+	   }
+   
+   public void exp0(memberVO vo) {   // 경험치 초기화 
+	      int cnt = 0;
+	      try {
+	         getConn();
+
+	         String sql = "update dama1 set exp = 0 where id = ?";
+	         psmt = conn.prepareStatement(sql);
+	         psmt.setString(1, vo.getId());
+
+	         cnt = psmt.executeUpdate();
+	      } catch (SQLException e) {
+	      } finally {
+	         close();
+	      }
+	   }
+
+   public void lvup(memberVO vo) {  // 레벨업 ! 
+	      int cnt = 0;
+	      try {
+	         getConn();
+	         String sql = "update dama1 set lv = lv + 1 where id = ?";
+	         psmt = conn.prepareStatement(sql);
+	         psmt.setString(1, vo.getId());
+	         cnt = psmt.executeUpdate();
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close();
+	      }
+	   }
+
 	
-	public ArrayList<memberVO> selectAll() {  // 랭킹 출력 
+	public ArrayList<memberVO> Rank() {  // 랭킹 출력 
 		ArrayList<memberVO> list = new ArrayList<memberVO>();
 		getConn();
 		String sql = "select id, nick, lv, exp from dama order by lv desc, exp desc";
