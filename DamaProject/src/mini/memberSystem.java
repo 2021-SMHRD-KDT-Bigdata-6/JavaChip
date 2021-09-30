@@ -74,7 +74,7 @@ public class memberSystem {
 									break;
 								}
 
-								System.out.print("1.밥먹기 2.잠자기 3.휴식하기 4.공부하기 5.병원 6.종료 >> ");
+								System.out.print("1.밥먹기 2.잠자기 3.휴식하기 4.공부하기 5.병원가기 6.종료 >> ");
 								String num = sc.next();
 
 								if (num.equals("1")) { // 밥먹기

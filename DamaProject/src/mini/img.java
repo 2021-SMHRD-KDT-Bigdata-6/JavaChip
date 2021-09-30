@@ -1,7 +1,7 @@
 package mini;
 import java.util.Scanner;
 
-public class img {
+public class img {  
 	public static void birth( ) {
 	      System.out.println("\r\n"
 	            + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀등록완료!⠀⠀⠀⠀⠀⠀⠀⠀⠀\r\n"
