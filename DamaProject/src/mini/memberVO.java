@@ -4,7 +4,6 @@ public class memberVO {
 	private String id;
 	private String pw;
 	private String nick;
-	private String phone;
 	private String lv;
 	private int exp;
 	
@@ -15,11 +14,11 @@ public class memberVO {
 		return "아이디 : " + id + "\t 별명 : " + nick + "\t 레벨 : " + lv + "\t 경험치 : " + exp;
 	}
 
-	public memberVO(String id, String pw, String nick, String phone, String lv, int exp) {
+	public memberVO(String id, String pw, String nick,  String lv, int exp) {
 		this.id = id;
 		this.pw = pw;
 		this.nick = nick;
-		this.phone = phone;
+		
 		this.lv = lv;
 		this.exp = exp;
 	}
@@ -78,13 +77,6 @@ public class memberVO {
 		this.nick = nick;
 	}
 	
-	public String getPhone() {
-		return phone;
-	}
-	
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
 	
 	public String getLv() {
 		return lv;

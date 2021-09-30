@@ -13,7 +13,6 @@ create table dama(
 );
 
 select * from member;
-select * from member_data;
 select * from dama;
 
 alter table big_member
